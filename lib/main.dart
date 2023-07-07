@@ -61,8 +61,58 @@ class _ListViewPageState extends State<ListViewPage> {
     '9. There are different types of careers you can pursue in your life. Which one will it be?',
     '10. There are different types of careers you can pursue in your life. Which one will it be?',
   ];
+  void showPopup(context, title, image, description) {
+    showDialog(context: context,
+        builder: (context) {
+      return Dialog(
+        child: Container(
+      width: MediaQuery.of(context).size.width*0.7,
+          height:380,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+          ),
+          child: Column(
+            children: [
+              ClipRect(
+                child: Image.asset(image,
+                width: 200, height: 200,),
+              ),
+            const SizedBox(height: 10,),
+              Text(title,
+                style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+              ),
+               Padding(
+                  padding: const EdgeInsets.all(8),
+                 child: Text(
+                   description,
+                   maxLines: 3,
+                   style: TextStyle(
+                     fontSize: 20,
+                     color: Colors.grey[500],
+                   ),
+                 ),
+               ),
+              ElevatedButton.icon(
+                  onPressed: (){
+                    Navigator.pop(context);
 
+                  },
+                  icon: const Icon(Icons.close),
+              label:const Text('close'),
+              )
 
+            ],
+        ),
+        ),
+      );
+        });
+
+  }
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width*0.6;
@@ -79,6 +129,8 @@ class _ListViewPageState extends State<ListViewPage> {
           itemBuilder:(context, index){
           return GestureDetector(
             onTap: (){debugPrint(titleList[index]);
+              showPopup(context, titleList[index], imageList[index],
+                  description[index]);
             },
             child: Card(
               child: Row(
